@@ -1,7 +1,7 @@
 import inquirer from "inquirer"
 import Pizza from "../models/Pizza.js"
 
-/*LO UNICO QUE FALTA TERMINAR ES ESTOOOO XD HACEEERRRRR NO OVLIDARNOSSS xD */
+ /*LO UNICO QUE FALTA TERMINAR ES ESTOOOO XD HACEEERRRRR NO OVLIDARNOSSS xD */
 
 const menuOpts = [
     {
