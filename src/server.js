@@ -17,4 +17,4 @@ app.listen(port, () => {
 
 //rutitas
 app.use("/api/pizzas", pizzaRouter);
-app.use("usuarios/")
+//app.use("usuarios/")

@@ -1,16 +1,18 @@
 import config from '../../dbconfig.js';
 import sql from 'mssql';
+import pizza from '../models/Pizza.js';
 
 class pizzaService {
     getAll = async () => {
         let rta = null;
         try {
             let pool = await sql.connect(config);
+        
             let result = await pool.request().query("SELECT * FROM Pizzas");
             rta = result.recordsets[0];
         }
         catch (error) {
-            console.log(error);
+            throw error
         }
         return rta;
     }
@@ -23,45 +25,47 @@ class pizzaService {
             rta = result.recordsets[0][0];
         }
         catch (error) {
-            console.log(error);
+            throw error
         }
         return rta;
     }
 
-    createPizza = async (Pizza) => {
+    createPizza = async (pizza) => {
         let filasAfectadas = 0;
         try {
             let pool = await sql.connect(config);
+            console.log(pizza);
             let result = await pool.request()
                 .input("nombre", sql.VarChar, pizza.nombre)
                 .input("libreGluten", sql.Bit, pizza.libreGluten)
                 .input("importe", sql.Decimal(10, 2), pizza.importe)
                 .input("descripcion", sql.VarChar, pizza.descripcion)
                 .query("INSERT INTO Pizzas (nombre, libreGluten, importe, descripcion) VALUES (@nombre, @libreGluten, @importe, @descripcion)");
-            filasAfectadas = result.rowsAffected;
+                
+                filasAfectadas = result.rowsAffected;
 
         }
         catch (error) {
-            console.log(error);
+            throw error
         }
         return filasAfectadas>0;
     }
 
-    updatePizza = async (id, Pizza) => {
+    updatePizza = async (id, pizza) => {
         let filasAfectadas = 0;
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-                .input("id", sql.Int, pizza.id)
+                .input('pId', sql.Int, id)
                 .input("nombre", sql.VarChar, pizza.nombre)
                 .input("libreGluten", sql.Bit, pizza.libreGluten)
                 .input("importe", sql.Decimal(10, 2), pizza.importe)
                 .input("descripcion", sql.VarChar, pizza.descripcion)
-                .query("UPDATE Pizzas SET nombre = @nombre, libreGluten = @libreGluten, importe = @importe, descripcion = @descripcion WHERE id = @id"); 
+                .query("UPDATE Pizzas SET nombre = @nombre, libreGluten = @libreGluten, importe = @importe, descripcion = @descripcion WHERE Id = @pId"); 
                 filasAfectadas = result.rowsAffected;
         }
         catch (error) {
-            console.log(error);
+            throw error
         }
         return filasAfectadas>0;
     }
@@ -70,11 +74,12 @@ class pizzaService {
         let filasAfectadas = 0;
         try {
             let pool = await sql.connect(config);
-            let result = await pool.request().input('pPizza', sql.Pizza, pizza).query("DELETE FROM Pizzas WHERE Id=@id");
+            let result = await pool.request()
+            .input('pId', sql.Int, id).query("DELETE FROM Pizzas WHERE Id=@pId");
             filasAfectadas = result.rowsAffected;
         }
         catch (error) {
-            console.log(error);
+            throw error
         }
         return filasAfectadas>0;
     }
