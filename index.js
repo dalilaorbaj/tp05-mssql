@@ -1,8 +1,18 @@
 import config from'./dbconfig.js';
 import sql from'mssql';
-import PizzaService from 'src/services/pizzas-services.js';
-import Pizza from 'src/models/Pizza.js';
+import PizzaService from './src/services/pizzas-services.js';
+import Pizza from './src/models/Pizza.js';
+import express from 'express';
 
+//const express = require("express");
+const app = express();
+
+app.get('/conchadetumadre', function (req, res) {
+    console.log("conchadetumadre")
+    res.send('hola!!!!!!!!!');
+});
+
+/*
 let svc = new PizzaService();
 let all = await svc.getAll();
 let pizzaId = await svc.getById(2);
@@ -15,3 +25,4 @@ let pizzaBorrada = await svc.deleteById(4);
 console.log(all);
 console.log(pizzaNueva);
 console.log();
+*/

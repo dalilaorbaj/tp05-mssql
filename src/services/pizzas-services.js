@@ -1,7 +1,7 @@
-import config from './dbconfig.js';
+import config from '../../dbconfig.js';
 import sql from 'mssql';
 
-class PizzaService {
+class pizzaService {
     getAll = async () => {
         let rta = null;
         try {
@@ -80,4 +80,4 @@ class PizzaService {
     }
 }
 
-export default PizzaService;
+export default pizzaService;
